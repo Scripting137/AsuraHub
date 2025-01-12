@@ -36,6 +36,14 @@ ss2:Slider("Speed", 0, 100, 16, function(t)
     end
 end)
 
+ss2:Slider("Jump Power", 0, 250, 50, function(t)
+    local jumpPower = t  -- The jump power value from the slider
+    local character = game.Players.LocalPlayer.Character
+    if character and character:FindFirstChild("Humanoid") then
+        character.Humanoid.JumpPower = jumpPower  -- Adjust the player's jump power
+    end
+end)
+
 
 
 local cred = win:Tab("CREDITS")
