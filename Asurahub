@@ -1,0 +1,24 @@
+local AkaliNotif = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/Dynissimo/main/Scripts/AkaliNotif.lua"))()
+local Notify = AkaliNotif.Notify
+
+local function scriptForGame1()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Scripting137/AsuraHub/main/luckyblock"))()
+end
+
+local function scriptForGame2()
+    print("Executing script for Game 2!")
+end
+
+local currentGameId = game.PlaceId
+
+if currentGameId == 662417684 then 
+    scriptForGame1()
+elseif currentGameId == 987654321 then 
+    scriptForGame2()
+else
+    Notify({
+        Description = "This Game Is Not Supported. Please Check Our Discord To See Supported Games.";
+        Duration = 10;
+    })
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Scripting137/AsuraHub/main/bro"))()
+end
