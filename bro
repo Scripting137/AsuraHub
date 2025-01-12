@@ -24,6 +24,26 @@ ss2:Button("Anti Afk",function()
 end)
 
 
+local function getPlayersInGame()
+    local playersList = {}
+    for _, player in pairs(game.Players:GetPlayers()) do
+        table.insert(playersList, player.Name)
+    end
+    return playersList
+end
+
+
+ss2:Dropdown("Teleport To Player", getPlayersInGame(), function(SelectedOption)
+    SelectedPlayer = game.Players:FindFirstChild(SelectedOption)
+    if SelectedPlayer then
+        local character = SelectedPlayer.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(character.HumanoidRootPart.CFrame)
+        end
+    end
+end)
+
+
 ss2:Slider("Speed", 0, 100, 16, function(t)
     local speed = t  -- The speed value from the slider
     local character = game.Players.LocalPlayer.Character
