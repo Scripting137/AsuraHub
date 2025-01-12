@@ -19,10 +19,6 @@ ss2:Button("Remote Spy",function()
     loadstring(game:HttpGetAsync("https://github.com/richie0866/remote-spy/releases/latest/download/RemoteSpy.lua"))()
 end) 
 
-ss2:Button("Dex Explorer",function()
-    
-end)
-
 ss2:Button("Anti Afk",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/KazeOnTop/Rice-Anti-Afk/main/Wind", true))()
 end)
