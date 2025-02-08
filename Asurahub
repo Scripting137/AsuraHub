@@ -6,19 +6,27 @@ local function scriptForGame1()
 end
 
 local function scriptForGame2()
-    print("Executing script for Game 2!")
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Scripting137/AsuraHub/refs/heads/main/Babft"))()
+end
+
+local function scriptForGame3()
+    print("Executing script for Game 3!")
+    -- Add your custom script for Game 3 here, for example:
+    loadstring(game:HttpGet("https://example.com/scriptForGame3.lua"))()
 end
 
 local currentGameId = game.PlaceId
 
-if currentGameId == 662417684 then 
+if currentGameId == 662417684 then
     scriptForGame1()
-elseif currentGameId == 987654321 then 
+elseif currentGameId == 537413528 then
     scriptForGame2()
+elseif currentGameId == 123456789 then  -- Example Game 3 ID
+    scriptForGame3()
 else
     Notify({
-        Description = "This Game Is Not Supported. Please Check Our Discord To See Supported Games.";
-        Duration = 10;
+        Description = "This Game Is Not Supported. Please Check Our Discord To See Supported Games.",
+        Duration = 10,
     })
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Scripting137/AsuraHub/refs/heads/main/bro"))()
 end
