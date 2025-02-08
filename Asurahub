@@ -20,5 +20,5 @@ else
         Description = "This Game Is Not Supported. Please Check Our Discord To See Supported Games.";
         Duration = 10;
     })
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Scripting137/AsuraHub/main/bro"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Scripting137/AsuraHub/refs/heads/main/bro?token=GHSAT0AAAAAAC6TZ4VVPRMJ5JREGNQL647KZ5HSCYA"))()
 end
