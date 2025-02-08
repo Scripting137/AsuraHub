@@ -1,0 +1,84 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local tweenService = game:GetService("TweenService")
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Define the CFrame locations (ensure these CFrames have proper heights for gliding)
+local locations = {
+    CFrame.new(-112.947067, 56.6067657, 1388.74744, 0.00942465477, -0.0992666855, -0.995016217, -9.43492839e-09, 0.995060444, -0.0992710963, 0.999955595, 0.000935605203, 0.00937809981),
+    CFrame.new(-129.550003, 50.8915367, 2146.59106, 0.0167432819, 0.198298663, -0.979998648, 8.04624989e-09, 0.980136037, 0.198326468, 0.99985981, -0.00332064368, 0.0164106917),
+    CFrame.new(-93.9740143, 63.5186577, 2928.18506, 0.00941180345, 0.0585077442, -0.998242557, -7.37511963e-09, 0.998286784, 0.0585103333, 0.999955714, -0.000550680386, 0.00939567946),
+    CFrame.new(-106.36618, 71.4163742, 3686.69287, 0.00207487587, -0.0204775482, -0.999788165, -8.77874218e-09, 0.999790311, -0.0204775929, 0.999997854, 4.24972386e-05, 0.00207444048),
+    CFrame.new(-125.326363, 73.3264694, 4474.88281, -0.0125865461, 0.0753964856, -0.997074187, 9.46435819e-09, 0.997153163, 0.075402461, 0.999920785, 0.000949047098, -0.0125507154),
+    CFrame.new(-142.893295, 78.2362061, 5237.72607, -0.0272283014, 0.0584951602, -0.997916281, -7.90071741e-09, 0.998286426, 0.0585168563, 0.999629259, 0.00159332249, -0.027181644),
+    CFrame.new(-98.5323334, 67.8231506, 6005.35449, -0.0198858418, -0.0655588135, -0.997650564, -8.24289881e-09, 0.997847855, -0.065571785, 0.999802232, -0.00130394183, -0.0198430438),
+    CFrame.new(-126.309326, 55.3592453, 6763.69434, 0.00939629693, -0.121772721, -0.992513537, -7.7193274e-09, 0.992557347, -0.121778101, 0.999955833, 0.00114427088, 0.00932636298),
+    CFrame.new(-121.639908, 31.7979927, 7534.92627, 0.00209250813, -0.0261262227, -0.999656439, -8.40641068e-09, 0.999658644, -0.0261262804, 0.999997795, 5.46778538e-05, 0.00209179358),
+    -- New CFrame you've provided (second-to-last)
+    CFrame.new(-85.573143, 110.976578, 8710.40039, 0.0179743022, 0.0248891506, -0.999528587, -8.47047232e-09, 0.999690115, 0.0248931721, 0.999838471, -0.000447428931, 0.0179687329),
+    CFrame.new(-60.2738876, -344.967499, 9496.69824, 0.0233155061, -0.0262344722, -0.999383867, 8.21385804e-09, 0.999655604, -0.0262416061, 0.999728143, 0.000611828116, 0.0233074762)
+}
+
+-- Function to enable noclip (disable collisions for all character parts)
+local function enableNoclip()
+    -- Disable collisions for all character parts
+    for _, part in ipairs(character:GetChildren()) do
+        if part:IsA("BasePart") then
+            part.CanCollide = false
+        end
+    end
+end
+
+-- Function to disable noclip (restore collisions for all character parts)
+local function disableNoclip()
+    -- Enable collisions for all character parts
+    for _, part in ipairs(character:GetChildren()) do
+        if part:IsA("BasePart") then
+            part.CanCollide = true
+        end
+    end
+end
+
+-- Set a minimum height to avoid water
+local minHeight = 50 -- Adjust this to a height that is above the water
+
+-- Function to smoothly glide character to a position, maintaining height
+local function glideToPosition(targetCFrame, duration)
+    if character and character:FindFirstChild("HumanoidRootPart") then
+        local rootPart = character.HumanoidRootPart
+
+        -- Ensure the character stays above the minimum height
+        local targetPosition = targetCFrame.Position
+        local adjustedHeight = math.max(targetPosition.Y, minHeight)  -- Set height to minHeight if lower
+        local adjustedCFrame = CFrame.new(targetPosition.X, adjustedHeight, targetPosition.Z)
+
+        -- Tween setup for smooth and controlled movement
+        local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear, Enum.EasingDirection.Out) -- Linear for faster speed
+        local goal = {CFrame = adjustedCFrame}
+
+        -- Create and play the tween
+        local tween = tweenService:Create(rootPart, tweenInfo, goal)
+        tween:Play()
+
+        -- Wait for the tween to finish
+        tween.Completed:Wait()
+    end
+end
+
+-- Function to continue gliding through the locations with no delay
+local function glideThroughLocations()
+    -- Enable noclip at the start
+    enableNoclip()
+
+    -- Glide to each location, one after the other
+    for _, location in ipairs(locations) do
+        glideToPosition(location, 0.5)  -- Glide to the next location in 0.5 second
+    end
+
+    -- After all gliding, disable noclip to restore normal collision
+    disableNoclip()
+end
+
+-- Start the glide with noclip
+glideThroughLocations()
